@@ -34,11 +34,11 @@ Numpy (for unit test)
 ## Contribution
 Contribution is more than welcome.
 
-To contribute, you should run 
+To contribute, you should firstly run 
 
 ```python new_model.py MODEL_NAME``` 
 
-Then your directory should be automatically created with template files.
+Then your model directory should be automatically created with template files.
 
 **Please don't forget test your model and write description before pull request.**
 
