@@ -9,7 +9,7 @@ All models are implemented as tf.keras.models.Model class.
 Therefore you can reuse them in your personal project easily.
 
 ***Notice: I'm looking for partners to manage this project.*** 
-***Please contact.***
+***If you're interested, please contact me.***
 
 ## Description
 ### Usage
