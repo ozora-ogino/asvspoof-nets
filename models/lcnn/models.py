@@ -4,7 +4,7 @@ from keras.layers.convolutional import Conv2D
 from keras.models import Model
 from keras.initializers import he_normal
 
-from .layers import Maxout
+from layers import Maxout
 
 
 #function that return the stuck of Conv2D and MFM
@@ -46,55 +46,101 @@ def MaxOutDense(x, dim):
     mfm_out = Maxout(int(dim/2))(dense_out)
     return mfm_out
 
-# this function helps to build LCNN. 
-def build_lcnn(shape, n_label=2):
-    """
+class LCNN(tf.keras.models.Model):
+  def __init__(self):
+    super(LCNN, self).__init__()
+    self.conv2d_1 = Conv2D(64, kernel_size=5, strides=1, padding='same')
+    self.mfm_1 = Maxout(32)
+    self.maxpool_1 = MaxPool2D(pool_size=(2, 2), strides=(2,2))
 
-    Define LCNN model by using Keras layers
+    self.conv2d_2 = Conv2D(64, kernel_size=1, strides=1, padding='same')
+    self.mfm_2 = Maxout(32)
+    self.batch_norm_2 = BatchNormalization() 
 
-    Augs:
-     shape (list) : Input shape for LCNN. (Example : [128, 128, 1])
-     n_label (int) : Number of label that LCNN should predict.
+    self.conv2d_3 = Conv2D(96, kernel_size=3, strides=1, padding='same')
+    self.mfm_3 = Maxout(48)
+    self.maxpool_3 = MaxPool2D(pool_size=(2, 2), strides=(2,2))
+    self.batch_norm_3 = BatchNormalization() 
 
-    Returns:
-      Model (keras.model): LCNN model 
+    self.conv2d_4 = Conv2D(96, kernel_size=1, strides=1, padding='same')
+    self.mfm_4 = Maxout(48)
+    self.batch_norm_4 = BatchNormalization()
 
-    """
+    self.conv2d_5 = Conv2D(128, kernel_size=3, strides=1, padding='same')
+    self.mfm_5 = Maxout(64)
+    self.maxpool_5 = MaxPool2D(pool_size=(2, 2), strides=(2,2))
+
+    self.conv2d_6 = Conv2D(128, kernel_size=1, strides=1, padding='same')
+    self.mfm_6 = Maxout(64)
+    self.batch_norm_6 = BatchNormalization()
+
+    self.conv2d_7 = Conv2D(64, kernel_size=3, strides=1, padding='same')
+    self.mfm_7 = Maxout(32)
+    self.batch_norm_7 = BatchNormalization()
+
+    self.conv2d_8 = Conv2D(64, kernel_size=1, strides=1, padding='same')
+    self.mfm_8 = Maxout(32)
+    self.batch_norm_8 = BatchNormalization()
+
+    self.conv2d_9 = Conv2D(64, kernel_size=3, strides=1, padding='same')
+    self.mfm_9 = Maxout(32)
+    self.maxpool_9 = MaxPool2D(pool_size=(2, 2), strides=(2,2))
+    self.flatten = Flatten()
+
+    self.dense_10= Dense(160)
+    self.mfm_10 = Maxout(80)
+    self.batch_norm_10 = BatchNormalization()
+    self.dropout_10 = Dropout(0.75)
+
+    self.out = Dense(2, activation='softmax')
+
+
+  def call(self, inputs, training=False):
+    x = self.conv2d_1(inputs)
+    x = self.mfm_1(x)
+    x = self.maxpool_1(x)
+
+    x = self.conv2d_2(inputs)
+    x = self.mfm_2(x)
+    x = self.batch_norm_2(x)
+
+    x = self.conv2d_3(inputs)
+    x = self.mfm_3(x)
+    x = self.maxpool_3(x)
+    x = self.batch_norm_3(x)
+
+    x = self.conv2d_4(inputs)
+    x = self.mfm_4(x)
+    x = self.batch_norm_4(x)
+
+    x = self.conv2d_5(inputs)
+    x = self.mfm_5(x)
+    x = self.maxpool_5(x)
+
+    x = self.conv2d_6(inputs)
+    x = self.mfm_6(x)
+    x = self.batch_norm_6(x)
+
+    x = self.conv2d_7(inputs)
+    x = self.mfm_7(x)
+    x = self.batch_norm_7(x)
+
+    x = self.conv2d_8(inputs)
+    x = self.mfm_8(x)
+    x = self.batch_norm_8(x)
+
+    x = self.conv2d_9(inputs)
+    x = self.mfm_9(x)
+    x = self.maxpool_9(x)
     
-    input = Input(shape=shape)
+    x = self.flatten(x)
 
-    conv2d_1 = MaxOutConv2D(input, 64, kernel_size=5, strides=1, padding='same')
-    maxpool_1 = MaxPool2D(pool_size=(2, 2), strides=(2,2))(conv2d_1)
+    x = self.dense_10(x)
+    x = self.mfm_10(x)
+    x = self.batch_norm_10(x)
+    if training:
+      x = self.dropout_10(x)
 
-    conv_2d_2 = MaxOutConv2D(maxpool_1, 64, kernel_size=1, strides=1, padding='same')
-    batch_norm_2 = BatchNormalization()(conv_2d_2)
+    return self.out(x)
 
-    conv2d_3 = MaxOutConv2D(batch_norm_2, 96, kernel_size=3, strides=1, padding='same')
-    maxpool_3 = MaxPool2D(pool_size=(2, 2), strides=(2,2))(conv2d_3)
-    batch_norm_3 = BatchNormalization()(maxpool_3)
-
-    conv_2d_4 = MaxOutConv2D(batch_norm_3, 96, kernel_size=1, strides=1, padding='same')
-    batch_norm_4 = BatchNormalization()(conv_2d_4)
-
-    conv2d_5 = MaxOutConv2D(batch_norm_4, 128, kernel_size=3, strides=1, padding='same')
-    maxpool_5 = MaxPool2D(pool_size=(2, 2), strides=(2,2))(conv2d_5)
-
-    conv_2d_6 = MaxOutConv2D(maxpool_5, 128, kernel_size=1, strides=1, padding='same')
-    batch_norm_6 = BatchNormalization()(conv_2d_6)
-
-    conv_2d_7 = MaxOutConv2D(batch_norm_6, 64, kernel_size=3, strides=1, padding='same')
-    batch_norm_7 = BatchNormalization()(conv_2d_7)
-
-    conv_2d_8 = MaxOutConv2D(batch_norm_7, 64, kernel_size=1, strides=1, padding='same')
-    batch_norm_8 = BatchNormalization()(conv_2d_8)
-
-    conv_2d_9 = MaxOutConv2D(batch_norm_8, 64, kernel_size=3, strides=1, padding='same')
-    maxpool_9 = MaxPool2D(pool_size=(2, 2), strides=(2,2))(conv_2d_9)
-    flatten = Flatten()(maxpool_9)
-
-    dense_10 = MaxOutDense(flatten, 160)
-    batch_norm_10 = BatchNormalization()(dense_10)
-    dropout_10 = Dropout(0.75)(batch_norm_10)
-
-    output = Dense(n_label, activation='softmax')(dropout_10)
-            
+# this function helps to build LCNN. 

@@ -1,5 +1,4 @@
 import tensorflow as tf
-from typeguard import typechecked
 import keras
 from keras import backend as K
 from keras.layers import Layer
@@ -23,7 +22,6 @@ class Maxout(keras.layers.Layer):
     Reference : https://github.com/tensorflow/addons/blob/v0.10.0/tensorflow_addons/layers/maxout.py#L22-L90
     """
 
-    @typechecked
     def __init__(self, num_units: int, axis: int = -1, **kwargs):
         super().__init__(**kwargs)
         self.num_units = num_units
