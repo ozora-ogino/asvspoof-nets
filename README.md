@@ -1,9 +1,15 @@
 # DNNs for ASVspoof
-
 ## About 
+I believe that open cluture let a community bigger like Linux.
+So I create this project for ASVspoof community to share the DNNs implementation.
+Please contribute your models to this projects!
+I hope this project can help more people.
 
 All models are implemented as tf.keras.models.Model class.
-Therefore you can reuse them in your personal project.
+Therefore you can reuse them in your personal project easily.
+
+***Notice: I'm looking for partners to manage this project.*** 
+***Please contact.***
 
 ## Description
 ### Usage
@@ -25,20 +31,22 @@ models/*MODEL_NAME*/description.md : Description and reference.
 
 ### Requirements
 
-Tensorflow >= 2.0.0 
+Tensorflow >= 2.0
 
 Keras
 
-Numpy (for unit test)
+Numpy (for unit testing)
 
 ## Contribution
 Contribution is more than welcome.
 
-To contribute, you should firstly run 
+To add your model to my project, you should firstly run 
 
 ```python new_model.py MODEL_NAME``` 
 
 Then your model directory should be automatically created with template files.
+
+***The models should be implemented as a tensorflow.keras.models.Model class.***
 
 **Please don't forget test your model and write description before pull request.**
 
