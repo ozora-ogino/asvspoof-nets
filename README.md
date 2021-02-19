@@ -1,36 +1,30 @@
-# DNNs for ASVspoof on Tensorflow
+# DNNs for ASVspoof Implemented on Tensorflow
+
+## About 
+
+
+All models are implemented as tf.keras.models.Model class.
+Therefore you can reuse them in your personal project.
 
 ## Description
-Light CNN (LCNN) is CNN model which was propsed in Interspeech 2019 by STC teams and state of the art of ASVspoof2019.
-This LCNN is specificaly designed for spoofing detection for ASV system, but I believe LCNN can be used for other situations.
+### Usage
 
-LCNN is fearued by max Ffeature mapping function (MFM).
-MFM is an alternative of ReLU to suppress low-activation neurons in each layer.
-MFM makes LCNN lighter and more efficient than CNN with ReLU.
-
-If you'd like to know more detail, see the references below.
-
-## Experiment setup
-In this project, I used ASVspoof2019 database for testing my LCNN.
-As a speech feature, I used spectrograms that extracted by using STFT or CQT. 
-EER is used for evaluating.
+```git clone https://github.com/ozora-ogino/asvspoof-nets```
 
 
-## Description
-feature.py : In this file, you can see some functions that extracts speech features from raw audio data. 
+### File Explanation
 
-model/lcnn.py :LCNN model which implemented on Keras.
+models/[MODEL_NAME]/models.py : Models are implemented as tf.keras.models.Model class.
 
-model/layers.py : Maxout function for MFM.
+models/[MODEL_NAME]/layers.py : There are custom layers. (optional)
 
-metrics.py : Calculating EER.
+models/[MODEL_NAME]/test_models.py : Unittest
 
-train.py : In this file, you can train your LCNN model and evaluate.
+models/[MODEL_NAME]/description.md : Description and reference.
+
+
+## Contribution
 
 
 ## Reference
-"A Light CNN for Deep Face Representation with Noisy Labels" [https://arxiv.org/pdf/1511.02683.pdf]
-
-"STC Antispoofing Systems for the ASVspoof2019 Challenge" [https://arxiv.org/abs/1904.05576]
-
-ASVspoof2019 [https://www.asvspoof.org]
+[ASVspoof2019 Challenge](https://www.asvspoof.org)
