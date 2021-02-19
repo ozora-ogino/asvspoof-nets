@@ -15,13 +15,13 @@ Then import models to your code!!
 
 ### File Explanation
 
-models/[MODEL_NAME]/models.py : Models are implemented as tf.keras.models.Model class.
+models/*MODEL_NAME*/models.py : Models are implemented as tf.keras.models.Model class.
 
-models/[MODEL_NAME]/layers.py : There are custom layers. (optional)
+models/*MODEL_NAME*/layers.py : There are custom layers. (optional)
 
-models/[MODEL_NAME]/test_models.py : Unittest
+models/*MODEL_NAME*/test_models.py : Unittest
 
-models/[MODEL_NAME]/description.md : Description and reference.
+models/*MODEL_NAME*/description.md : Description and reference.
 
 ### Requirements
 
@@ -39,7 +39,8 @@ To contribute, you should run
 ```python new_model.py MODEL_NAME``` 
 
 Then your directory should be automatically created with template files.
-Don't forget test your model and write description before pull request.
+
+**Please don't forget test your model and write description before pull request.**
 
 
 ## Appriciate 
