@@ -2,8 +2,6 @@
 
 ## About 
 
-
-
 All models are implemented as tf.keras.models.Model class.
 Therefore you can reuse them in your personal project.
 
@@ -27,8 +25,25 @@ models/[MODEL_NAME]/description.md : Description and reference.
 
 ### Requirements
 
+Tensorflow >= 2.0.0 
+
+Keras
+
+Numpy (for unit test)
 
 ## Contribution
+Contribution is more than welcome.
+
+To contribute, you should run 
+
+```python new_model.py MODEL_NAME``` 
+
+Then your directory should be automatically created with template files.
+Don't forget test your model and write description before pull request.
+
+
+## Appriciate 
+I really appriciate to the studies which I refered for creating this repository and all of my contributor.
 
 
 ## Reference
